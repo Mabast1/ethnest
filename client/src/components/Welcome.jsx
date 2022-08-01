@@ -9,16 +9,19 @@ const Welcome = () => {
   const commonStyles =
     "min-h-[70px] sm:px-0 px-2 sm:min-w-[120px] flex justify-center items-center border-[0.5px] border-gray-400 text-sm font-light text-white";
 
-  const connectWallet = ({ placeholder, type, name, handleChange }) => (
+  const Input = ({ placeholder, type, name, value, handleChange }) => (
     <input
       placeholder={placeholder}
       type={type}
+      step="0.0001"
       name={name}
-      handleChange={handleChange}
+      value={value}
+      onChange={(e) => handleChange(e, name)}
+      className={`my-2 w-full rounded-sm p-2 outline-none bg-transparent text-white border-none text-sm white-glassmorphism`}
     />
   );
 
-  const Input = () => {};
+  const connectWallet = () => {};
 
   const handleChange = () => {};
 
