@@ -4,6 +4,7 @@ import { SiEthereum } from "react-icons/si";
 import { BsInfoCircle } from "react-icons/bs";
 
 import { Loader } from "./";
+import { runFireworks } from "../lib/utils";
 
 const commonStyles =
   "min-h-[70px] sm:px-0 px-2 sm:min-w-[120px] flex justify-center items-center border-[0.5px] border-gray-400 text-sm font-light text-white";
@@ -22,7 +23,9 @@ const Input = ({ placeholder, type, name, value, handleChange }) => (
 
 const Welcome = () => {
   const connectWallet = () => {};
-  const handleSubmit = () => {};
+  const handleSubmit = () => {
+    runFireworks();
+  };
   const handleChange = () => {};
 
   return (
@@ -97,7 +100,7 @@ const Welcome = () => {
               handleChange={handleChange}
             />
             <div className="h-[1px] w-full bg-gray-400 my-2" />
-            {true ? (
+            {false ? (
               <Loader />
             ) : (
               <button
