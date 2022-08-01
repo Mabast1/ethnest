@@ -5,27 +5,25 @@ import { BsInfoCircle } from "react-icons/bs";
 
 import { Loader } from "./";
 
+const commonStyles =
+  "min-h-[70px] sm:px-0 px-2 sm:min-w-[120px] flex justify-center items-center border-[0.5px] border-gray-400 text-sm font-light text-white";
+
+const Input = ({ placeholder, type, name, value, handleChange }) => (
+  <input
+    placeholder={placeholder}
+    type={type}
+    step="0.0001"
+    name={name}
+    value={value}
+    onChange={(e) => handleChange(e, name)}
+    className="my-2 w-full rounded-sm p-2 outline-none bg-transparent text-white border-none text-sm white-glassmorphism"
+  />
+);
+
 const Welcome = () => {
-  const commonStyles =
-    "min-h-[70px] sm:px-0 px-2 sm:min-w-[120px] flex justify-center items-center border-[0.5px] border-gray-400 text-sm font-light text-white";
-
-  const Input = ({ placeholder, type, name, value, handleChange }) => (
-    <input
-      placeholder={placeholder}
-      type={type}
-      step="0.0001"
-      name={name}
-      value={value}
-      onChange={(e) => handleChange(e, name)}
-      className="my-2 w-full rounded-sm p-2 outline-none bg-transparent text-white border-none text-sm white-glassmorphism"
-    />
-  );
-
   const connectWallet = () => {};
-
-  const handleChange = () => {};
-
   const handleSubmit = () => {};
+  const handleChange = () => {};
 
   return (
     <div className="flex w-full justify-center items-center">
