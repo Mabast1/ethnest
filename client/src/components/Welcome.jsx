@@ -17,7 +17,7 @@ const Welcome = () => {
       name={name}
       value={value}
       onChange={(e) => handleChange(e, name)}
-      className={`my-2 w-full rounded-sm p-2 outline-none bg-transparent text-white border-none text-sm white-glassmorphism`}
+      className="my-2 w-full rounded-sm p-2 outline-none bg-transparent text-white border-none text-sm white-glassmorphism"
     />
   );
 
@@ -96,6 +96,8 @@ const Welcome = () => {
               type="text"
               handleChange={handleChange}
             />
+            <div className="h-[1px] w-full bg-gray-400 my-2" />
+            {true ? <Loader /> : <div></div>}
           </div>
         </div>
       </div>
