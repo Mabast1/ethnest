@@ -65,9 +65,7 @@ const Welcome = () => {
                 <BsInfoCircle fontSize={17} color="#fff" />
               </div>
               <div>
-                <p className="text-white font-light text-sm">
-                  0xadlkj....iwejslao
-                </p>
+                <p className="text-white font-light text-sm">0x211W...5208</p>
                 <p className="text-white font-semibold text-lg mt-1">
                   Ethereum
                 </p>
