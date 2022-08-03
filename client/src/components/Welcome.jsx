@@ -30,6 +30,8 @@ const Welcome = () => {
     formData,
     handleChange,
     sendTransaction,
+    isLoading,
+    setIsLoading,
   } = useContext(TransactionContext);
 
   const handleSubmit = (e) => {
@@ -40,8 +42,6 @@ const Welcome = () => {
     if (!addressTo || !amount || !keyword || !message) return;
 
     sendTransaction();
-
-    runFireworks();
   };
 
   return (
@@ -124,7 +124,7 @@ const Welcome = () => {
               handleChange={handleChange}
             />
             <div className="h-[1px] w-full bg-gray-400 my-2" />
-            {false ? (
+            {isLoading ? (
               <Loader />
             ) : (
               <button

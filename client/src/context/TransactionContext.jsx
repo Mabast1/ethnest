@@ -120,6 +120,8 @@ export const TransactionProvider = ({ children }) => {
 
       const transactionCount = await transactionContract.getTransactionCount();
       setTransactionCount(transactionCount.toNumber());
+
+      runFireworks();
     } catch (errors) {
       console.log(errors);
       throw new Error("No ethereum object.");
@@ -139,6 +141,8 @@ export const TransactionProvider = ({ children }) => {
         setFormData,
         handleChange,
         sendTransaction,
+        isLoading,
+        setIsLoading,
       }}
     >
       {children}
