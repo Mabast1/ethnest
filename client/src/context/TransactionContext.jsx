@@ -29,6 +29,10 @@ export const TransactionProvider = ({ children }) => {
     keyword: "",
     message: "",
   });
+  const [isLoading, setIsLoading] = useState(false);
+  const [transactionCount, setTransactionCount] = useState(
+    localStorage.getItem("transactionCount")
+  );
 
   const handleChange = (e, name) => {
     setFormData((prevState) => ({
@@ -107,6 +111,15 @@ export const TransactionProvider = ({ children }) => {
         keyword,
         message
       );
+
+      setIsLoading(true);
+      console.log(`Loading - ${transactionHash.hash}`);
+      await transactionHash.wait();
+      setIsLoading(false);
+      console.log(`Success - ${transactionHash.hash}`);
+
+      const transactionCount = await transactionContract.getTransactionCount();
+      setTransactionCount(transactionCount.toNumber());
     } catch (errors) {
       console.log(errors);
       throw new Error("No ethereum object.");
