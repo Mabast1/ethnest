@@ -24,8 +24,8 @@ const Input = ({ placeholder, type, name, value, handleChange }) => (
 
 const Welcome = () => {
   const {
-    connectWallet,
     currentAccount,
+    connectWallet,
     setFormData,
     formData,
     handleChange,

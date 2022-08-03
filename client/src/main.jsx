@@ -6,9 +6,9 @@ import "./index.css";
 import { TransactionProvider } from "./context/TransactionContext";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <TransactionProvider>
-    <React.StrictMode>
+  <React.StrictMode>
+    <TransactionProvider>
       <App />
-    </React.StrictMode>
-  </TransactionProvider>
+    </TransactionProvider>
+  </React.StrictMode>
 );
