@@ -100,6 +100,13 @@ export const TransactionProvider = ({ children }) => {
           },
         ],
       });
+
+      const transactionHash = await transactionContract.addToBlockchain(
+        addressTo,
+        parasedAmount,
+        keyword,
+        message
+      );
     } catch (errors) {
       console.log(errors);
       throw new Error("No ethereum object.");
