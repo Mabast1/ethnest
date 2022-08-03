@@ -4,7 +4,7 @@ import { SiEthereum } from "react-icons/si";
 import { BsInfoCircle } from "react-icons/bs";
 
 import { Loader } from "./";
-import { runFireworks } from "../lib/utils";
+import { runFireworks } from "../lib/fireWorks";
 import { TransactionContext } from "../context/TransactionContext";
 
 const commonStyles =
@@ -23,12 +23,26 @@ const Input = ({ placeholder, type, name, value, handleChange }) => (
 );
 
 const Welcome = () => {
-  const { connectWallet, currentAccount } = useContext(TransactionContext);
+  const {
+    connectWallet,
+    currentAccount,
+    setFormData,
+    formData,
+    handleChange,
+    sendTransaction,
+  } = useContext(TransactionContext);
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    const { addressTo, amount, keyword, message } = formData;
+
+    e.preventDefault();
+
+    if (!addressTo || !amount || !keyword || !message) return;
+
+    sendTransaction();
+
     runFireworks();
   };
-  const handleChange = () => {};
 
   return (
     <div className="flex w-full justify-center items-center">
@@ -54,7 +68,7 @@ const Welcome = () => {
           ) : (
             <div className="flex flex-row justify-center items-center my-5 bg-gray-800 p-3 rounded-full white-glassmorphism">
               <p className="text-white text-base font-semibold">
-                Wallet is Connected
+                🎉 Wallet is Connected Successfully! 🎉
               </p>
             </div>
           )}

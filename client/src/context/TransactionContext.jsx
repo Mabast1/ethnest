@@ -2,6 +2,7 @@ import React, { useState, useEffect, createContext } from "react";
 import { ethers } from "ethers";
 
 import { contractABI, contractAddress } from "../utils/constants";
+import { runFireworks } from "../lib/fireWorks";
 
 export const TransactionContext = createContext();
 
@@ -16,11 +17,25 @@ const getEthereumContract = () => {
     signer
   );
 
-  console.log({ provider, signer, transactionContract });
+  return transactionContract;
 };
 
 export const TransactionProvider = ({ children }) => {
+  //all state declarations
   const [currentAccount, setCurrentAccount] = useState("");
+  const [formData, setFormData] = useState({
+    addressTo: "",
+    amount: "",
+    keyword: "",
+    message: "",
+  });
+
+  const handleChange = (e, name) => {
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: e.target.value,
+    }));
+  };
 
   // Checking if wallet (MetaMask) connected
   const checkIfWalletIsConnected = async () => {
@@ -55,9 +70,25 @@ export const TransactionProvider = ({ children }) => {
       });
 
       setCurrentAccount(accounts[0]);
+
+      runFireworks();
     } catch (error) {
       console.log(error);
 
+      throw new Error("No ethereum object.");
+    }
+  };
+
+  const sendTransaction = async () => {
+    try {
+      if (!ethereum) return alert("Please install and configure MetaMask!");
+
+      // get data from the form
+      const { addressTo, amount, keyword, message } = formData;
+      const transactionContract = getEthereumContract();
+      getEthereumContract();
+    } catch (errors) {
+      console.log(errors);
       throw new Error("No ethereum object.");
     }
   };
@@ -71,6 +102,10 @@ export const TransactionProvider = ({ children }) => {
       value={{
         connectWallet,
         currentAccount,
+        formData,
+        setFormData,
+        handleChange,
+        sendTransaction,
       }}
     >
       {children}
