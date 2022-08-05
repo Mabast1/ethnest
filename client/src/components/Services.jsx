@@ -19,7 +19,7 @@ const ServiceCard = ({ color, title, icon, subtitle }) => (
 
 const Services = () => {
   return (
-    <div className="flex w-full justify-center items-center gradient-bg-services">
+    <div className="flex w-full justify-center items-center gradient-bg-services py-12 px-4">
       <div className="flex flex-col mf:flex-row justify-center items-center gap-10">
         <div className="flex justify-center items-center w-full">
           <div className="flex justify-center items-center ">
