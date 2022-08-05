@@ -93,7 +93,13 @@ const Welcome = () => {
               </div>
               <div>
                 <p className="text-white font-light text-sm">
-                  {shortenAddress(currentAccount)}
+                  {currentAccount ? (
+                    shortenAddress(currentAccount)
+                  ) : (
+                    <p className="text-sm text-gray-200">
+                      Connect wallet to see address
+                    </p>
+                  )}
                 </p>
                 <p className="text-white font-semibold text-lg mt-1">
                   Ethereum
@@ -130,13 +136,14 @@ const Welcome = () => {
             {isLoading ? (
               <Loader />
             ) : (
-              <button
-                type="button"
+              <div
                 onClick={handleSubmit}
-                className="text-white w-full mt-2 border-[1px] p-2 border-[#3d4f7c] rounded-full cursor-pointer"
+                className={`text-white flex justify-center items-center w-full mt-2 border-[1px] p-2 border-[#3d4f7c] rounded-full ${
+                  !currentAccount ? "" : "cursor-pointer"
+                }`}
               >
-                Send Now
-              </button>
+                {currentAccount ? "Send Now" : "Connect wallet to send ETH"}
+              </div>
             )}
           </div>
         </div>
