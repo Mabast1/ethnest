@@ -12,8 +12,15 @@ const useFetch = ({ keyword }) => {
           .join("")}&limit=1`
       );
       const { data } = await response.json();
+      const result = data[0].images.downsized_medium.url;
 
-      setGifUrl(data[0]?.images?.downsized_medium?.url);
+      if (result === undefined) {
+        setGifUrl(
+          "https://i.pinimg.com/originals/73/d3/a1/73d3a14d212314ab1f7268b71d639c15.gif"
+        );
+      } else {
+        setGifUrl(result);
+      }
     } catch (errors) {
       setGifUrl(
         "https://i.pinimg.com/originals/73/d3/a1/73d3a14d212314ab1f7268b71d639c15.gif"
