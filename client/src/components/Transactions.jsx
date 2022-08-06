@@ -54,13 +54,24 @@ const Transactions = () => {
                 return <TransactionCard key={item + idx} {...item} />;
             })
           ) : (
-            <div className="flex justify-center items-center flex-col">
-              <p className="text-gray-400 text-center">
-                No recent transactions found for this account, connect a
-                different account in your wallet or make a transaction to view
-                your transaction history
-              </p>
-            </div>
+            <>
+              <div className="flex justify-center items-center flex-col sm:w-full px-2 md:w-1/2">
+                <p className="text-gray-400 text-center">
+                  No recent transactions found for this account, connect a
+                  different account in your wallet or make a transaction to view
+                  your transaction history
+                </p>
+                <p className="text-gray-400 text-center">
+                  in the mean time take a look at some dummy transaction data
+                  below
+                </p>
+              </div>
+              <div className="flex flex-wrap justify-center items-center mt-10">
+                {dummyData.reverse().map((item, idx) => (
+                  <TransactionCard key={item + idx} {...item} dummy />
+                ))}
+              </div>
+            </>
           )}
         </div>
       </div>
