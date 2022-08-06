@@ -5,7 +5,12 @@ import dummyData from "../utils/dummyData";
 import TransactionCard from "./TransactionCard";
 
 const Transactions = () => {
-  const { currentAccount, connectWallet } = useContext(TransactionContext);
+  const {
+    currentAccount,
+    connectWallet,
+    transactions,
+    checkIfTransactionsExist,
+  } = useContext(TransactionContext);
 
   return (
     <div className="flex w-full justify-center items-center 2xl:px-20 gradient-bg-transactions">
@@ -40,9 +45,23 @@ const Transactions = () => {
           </div>
         )}
         <div className="flex flex-wrap justify-center items-center mt-10">
-          {/* {[...dummyData].reverse().map((item, idx) => (
-            <TransactionCard key={item + idx} {...item} />
-          ))} */}
+          {!transactions.length ? (
+            [...transactions].reverse().map((item, idx) => {
+              if (
+                item.addressFrom.toLowerCase() === currentAccount ||
+                item.addressTo.toLowerCase() === currentAccount
+              )
+                return <TransactionCard key={item + idx} {...item} />;
+            })
+          ) : (
+            <div className="flex justify-center items-center flex-col">
+              <p className="text-gray-400 text-center">
+                No recent transactions found for this account, connect a
+                different account in your wallet or make a transaction to view
+                your transaction history
+              </p>
+            </div>
+          )}
         </div>
       </div>
     </div>

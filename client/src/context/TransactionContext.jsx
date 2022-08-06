@@ -42,49 +42,36 @@ export const TransactionProvider = ({ children }) => {
     }));
   };
 
-  const getAllTransactions = async (transactions) => {
-    try {
-      if (!ethereum) return alert("Please install and configure MetaMask!");
-      const transactionContract = getEthereumContract();
+  // const getTransactionHistory = (address) => {
+  //   let etherscanProvider = new ethers.providers.EtherscanProvider();
 
-      const availableTransactions =
-        await transactionContract.getAllTransactions();
-
-      const structuredtransactions = availableTransactions.map((item) => ({
-        addressTo: item.receiver,
-        addressFrom: item.sender,
-        timestamp: new Date(item.timestamp.toNumber() * 1000).toLocaleString(),
-        message: item.message,
-        keyword: item.keyword,
-        amount: parseInt(item.amount._hex) / 10 ** 18,
-      }));
-
-      setTransactions(structuredtransactions);
-
-      console.log(structuredtransactions);
-    } catch (error) {
-      console.log(error);
-
-      throw new Error("No ethereum object.");
-    }
-  };
+  //   etherscanProvider.getHistory(address).then((history) => {
+  //     history.forEach((tx) => {
+  //       console.log(tx);
+  //     });
+  //   });
+  // };
 
   // Checking if wallet (MetaMask) connected
   const checkIfWalletIsConnected = async () => {
     try {
-      if (!ethereum)
+      if (!ethereum) {
         return console.log(
           "For this website to work as intended please install and configure MetaMask!"
         );
-
-      const accounts = await ethereum.request({ method: "eth_accounts" });
-
-      if (accounts.length) {
-        setCurrentAccount(accounts[0]);
-
-        getAllTransactions();
       } else {
-        console.log("No Accounts Found! ");
+        const accounts = await ethereum.request({ method: "eth_accounts" });
+
+        if (accounts.length) {
+          setCurrentAccount(accounts[0]);
+
+          getAllTransactions();
+
+          // getTransactionHistory(accounts[0]);
+        } else {
+          console.log("No Accounts Found! ");
+          window.localStorage.clear("transactionCount");
+        }
       }
     } catch (error) {
       console.log(error);
@@ -96,13 +83,12 @@ export const TransactionProvider = ({ children }) => {
   const checkIfTransactionsExist = async () => {
     try {
       const transactionContract = getEthereumContract();
-      const transactionCount = await transactionContract.getTransactionCount();
+      const currentTransactionCount =
+        await transactionContract.getTransactionCount();
 
-      window.localStorage.setItem("transactionCount", transactionCount);
-    } catch (errors) {
+      window.localStorage.setItem("transactionCount", currentTransactionCount);
+    } catch (error) {
       console.log(error);
-
-      throw new Error("No ethereum object.");
     }
   };
 
@@ -116,7 +102,49 @@ export const TransactionProvider = ({ children }) => {
 
       setCurrentAccount(accounts[0]);
 
-      runFireworks();
+      window.location.reload();
+    } catch (error) {
+      console.log(error);
+
+      throw new Error("No ethereum object.");
+    }
+  };
+
+  const getAllTransactions = async (account) => {
+    try {
+      if (!ethereum) return alert("Please install and configure MetaMask!");
+      const transactionContract = getEthereumContract();
+
+      console.log(transactionContract);
+
+      const availableTransactions =
+        await transactionContract.getAllTransactions();
+
+      const accounts = await ethereum.request({
+        method: "eth_requestAccounts",
+      });
+
+      const structuredtransactions = availableTransactions.map((item) => ({
+        addressTo: item.receiver,
+        addressFrom: item.sender,
+        timestamp: new Date(item.timestamp.toNumber() * 1000).toLocaleString(),
+        message: item.message,
+        keyword: item.keyword,
+        amount: parseInt(item.amount._hex) / 10 ** 18,
+      }));
+
+      setTransactions(structuredtransactions);
+
+      // const st = () => {
+      //   structuredtransactions.map((t, i) => {
+      //     console.log(`addressto: ${t.addressTo} account: ${accounts}`);
+      //     t.addressTo === accounts && console.log("success");
+      //   });
+      // };
+
+      // st();
+
+      console.log(structuredtransactions);
     } catch (error) {
       console.log(error);
 
@@ -172,7 +200,8 @@ export const TransactionProvider = ({ children }) => {
   useEffect(() => {
     checkIfWalletIsConnected();
     checkIfTransactionsExist();
-  }, []);
+    // getTransactionHistory();
+  }, [transactionCount]);
 
   return (
     <TransactionContext.Provider
@@ -185,7 +214,7 @@ export const TransactionProvider = ({ children }) => {
         sendTransaction,
         isLoading,
         setIsLoading,
-        checkIfTransactionsExist,
+        transactions,
       }}
     >
       {children}
