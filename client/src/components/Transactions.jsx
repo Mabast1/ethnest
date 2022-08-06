@@ -5,12 +5,8 @@ import dummyData from "../utils/dummyData";
 import TransactionCard from "./TransactionCard";
 
 const Transactions = () => {
-  const {
-    currentAccount,
-    connectWallet,
-    transactions,
-    checkIfTransactionsExist,
-  } = useContext(TransactionContext);
+  const { currentAccount, connectWallet, transactions, transactionCount } =
+    useContext(TransactionContext);
 
   return (
     <div className="flex w-full justify-center items-center 2xl:px-20 gradient-bg-transactions">
@@ -45,34 +41,32 @@ const Transactions = () => {
           </div>
         )}
         <div className="flex flex-wrap justify-center items-center mt-10">
-          {!transactions.length ? (
-            [...transactions].reverse().map((item, idx) => {
-              if (
-                item.addressFrom.toLowerCase() === currentAccount ||
-                item.addressTo.toLowerCase() === currentAccount
-              )
-                return <TransactionCard key={item + idx} {...item} />;
-            })
-          ) : (
-            <>
-              <div className="flex justify-center items-center flex-col sm:w-full px-2 md:w-1/2">
-                <p className="text-gray-400 text-center">
-                  No recent transactions found for this account, connect a
-                  different account in your wallet or make a transaction to view
-                  your transaction history
-                </p>
-                <p className="text-gray-400 text-center">
-                  in the mean time take a look at some dummy transaction data
-                  below
-                </p>
-              </div>
-              <div className="flex flex-wrap justify-center items-center mt-10">
-                {dummyData.reverse().map((item, idx) => (
-                  <TransactionCard key={item + idx} {...item} dummy />
-                ))}
-              </div>
-            </>
-          )}
+          {[...transactions].reverse().map((item, idx) => {
+            if (
+              item.addressFrom.toLowerCase() === currentAccount ||
+              item.addressTo.toLowerCase() === currentAccount
+            ) {
+              return <TransactionCard key={item + idx} {...item} />;
+            } else if (idx === 0) {
+              return (
+                <div className="w-full" key={idx}>
+                  <div className="flex w-full justify-center items-center md:px-28 px-5">
+                    <p className="text-gray-400 text-center">
+                      No recent transactions found for this account, connect a
+                      different account in your wallet or make a transaction to
+                      view your transaction history in the mean time take a look
+                      at some dummy transaction data below
+                    </p>
+                  </div>
+                  <div className="flex flex-wrap justify-center items-center mt-10">
+                    {dummyData.reverse().map((item, idx) => (
+                      <TransactionCard key={item + idx} {...item} dummy />
+                    ))}
+                  </div>
+                </div>
+              );
+            }
+          })}
         </div>
       </div>
     </div>

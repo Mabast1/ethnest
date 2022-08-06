@@ -102,7 +102,11 @@ export const TransactionProvider = ({ children }) => {
 
       setCurrentAccount(accounts[0]);
 
-      window.location.reload();
+      runFireworks();
+
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
     } catch (error) {
       console.log(error);
 
@@ -115,14 +119,8 @@ export const TransactionProvider = ({ children }) => {
       if (!ethereum) return alert("Please install and configure MetaMask!");
       const transactionContract = getEthereumContract();
 
-      console.log(transactionContract);
-
       const availableTransactions =
         await transactionContract.getAllTransactions();
-
-      const accounts = await ethereum.request({
-        method: "eth_requestAccounts",
-      });
 
       const structuredtransactions = availableTransactions.map((item) => ({
         addressTo: item.receiver,
@@ -134,15 +132,6 @@ export const TransactionProvider = ({ children }) => {
       }));
 
       setTransactions(structuredtransactions);
-
-      // const st = () => {
-      //   structuredtransactions.map((t, i) => {
-      //     console.log(`addressto: ${t.addressTo} account: ${accounts}`);
-      //     t.addressTo === accounts && console.log("success");
-      //   });
-      // };
-
-      // st();
 
       console.log(structuredtransactions);
     } catch (error) {
@@ -191,6 +180,8 @@ export const TransactionProvider = ({ children }) => {
       setTransactionCount(transactionCount.toNumber());
 
       runFireworks();
+
+      // window.location.reload();
     } catch (errors) {
       console.log(errors);
       throw new Error("No ethereum object.");
@@ -214,7 +205,9 @@ export const TransactionProvider = ({ children }) => {
         sendTransaction,
         isLoading,
         setIsLoading,
+        transactionCount,
         transactions,
+        setTransactions,
       }}
     >
       {children}
