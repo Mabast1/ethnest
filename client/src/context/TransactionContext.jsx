@@ -33,12 +33,40 @@ export const TransactionProvider = ({ children }) => {
   const [transactionCount, setTransactionCount] = useState(
     localStorage.getItem("transactionCount")
   );
+  const [transactions, setTransactions] = useState([]);
 
   const handleChange = (e, name) => {
     setFormData((prevState) => ({
       ...prevState,
       [name]: e.target.value,
     }));
+  };
+
+  const getAllTransactions = async (transactions) => {
+    try {
+      if (!ethereum) return alert("Please install and configure MetaMask!");
+      const transactionContract = getEthereumContract();
+
+      const availableTransactions =
+        await transactionContract.getAllTransactions();
+
+      const structuredtransactions = availableTransactions.map((item) => ({
+        addressTo: item.receiver,
+        addressFrom: item.sender,
+        timestamp: new Date(item.timestamp.toNumber() * 1000).toLocaleString(),
+        message: item.message,
+        keyword: item.keyword,
+        amount: parseInt(item.amount._hex) * 10 ** 18,
+      }));
+
+      setTransactions(structuredtransactions);
+
+      console.log(structuredtransactions);
+    } catch (error) {
+      console.log(error);
+
+      throw new Error("No ethereum object.");
+    }
   };
 
   // Checking if wallet (MetaMask) connected
@@ -54,9 +82,7 @@ export const TransactionProvider = ({ children }) => {
       if (accounts.length) {
         setCurrentAccount(accounts[0]);
 
-        console.log(accounts[0]);
-
-        //getAllTransactions();
+        getAllTransactions();
       } else {
         console.log("No Accounts Found! ");
       }
