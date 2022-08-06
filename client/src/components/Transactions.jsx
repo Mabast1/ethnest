@@ -41,32 +41,35 @@ const Transactions = () => {
           </div>
         )}
         <div className="flex flex-wrap justify-center items-center mt-10">
-          {[...transactions].reverse().map((item, idx) => {
-            if (
-              item.addressFrom.toLowerCase() === currentAccount ||
-              item.addressTo.toLowerCase() === currentAccount
-            ) {
-              return <TransactionCard key={item + idx} {...item} />;
-            } else if (idx === 0) {
-              return (
-                <div className="w-full" key={idx}>
-                  <div className="flex w-full justify-center items-center md:px-28 px-5">
-                    <p className="text-gray-400 text-center">
-                      No recent transactions found for this account, connect a
-                      different account in your wallet or make a transaction to
-                      view your transaction history in the mean time take a look
-                      at some dummy transaction data below
-                    </p>
+          {[...transactions]
+            .reverse()
+            .slice(0, 9)
+            .map((item, idx) => {
+              if (
+                item.addressFrom.toLowerCase() === currentAccount ||
+                item.addressTo.toLowerCase() === currentAccount
+              ) {
+                return <TransactionCard key={item + idx} {...item} />;
+              } else if (idx === 0) {
+                return (
+                  <div className="w-full" key={idx}>
+                    <div className="flex w-full justify-center items-center md:px-28 px-5">
+                      <p className="text-gray-400 text-center">
+                        No recent transactions found for this account, connect a
+                        different account in your wallet or make a transaction
+                        to view your transaction history in the mean time take a
+                        look at some dummy transaction data below
+                      </p>
+                    </div>
+                    <div className="flex flex-wrap justify-center items-center mt-10">
+                      {dummyData.reverse().map((item, idx) => (
+                        <TransactionCard key={item + idx} {...item} dummy />
+                      ))}
+                    </div>
                   </div>
-                  <div className="flex flex-wrap justify-center items-center mt-10">
-                    {dummyData.reverse().map((item, idx) => (
-                      <TransactionCard key={item + idx} {...item} dummy />
-                    ))}
-                  </div>
-                </div>
-              );
-            }
-          })}
+                );
+              }
+            })}
         </div>
       </div>
     </div>
