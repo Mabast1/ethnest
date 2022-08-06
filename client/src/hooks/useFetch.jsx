@@ -15,9 +15,16 @@ const useFetch = ({ keyword }) => {
       const result = data[0].images.downsized_medium.url;
 
       if (result === undefined) {
-        setGifUrl(
-          "https://i.pinimg.com/originals/73/d3/a1/73d3a14d212314ab1f7268b71d639c15.gif"
+        // setGifUrl(
+        //   "https://i.pinimg.com/originals/73/d3/a1/73d3a14d212314ab1f7268b71d639c15.gif"
+        // );
+        const resUndefined = await fetch(
+          `api.giphy.com/v1/gifs/random?${API_KEY}`
         );
+
+        const dataUndefined = await resUndefined.json();
+
+        setGifUrl(dataUndefined[0]?.images?.downsized_medium?.url);
       } else {
         setGifUrl(result);
       }
