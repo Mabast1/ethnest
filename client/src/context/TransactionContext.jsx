@@ -56,7 +56,7 @@ export const TransactionProvider = ({ children }) => {
         timestamp: new Date(item.timestamp.toNumber() * 1000).toLocaleString(),
         message: item.message,
         keyword: item.keyword,
-        amount: parseInt(item.amount._hex) * 10 ** 18,
+        amount: parseInt(item.amount._hex) / 10 ** 18,
       }));
 
       setTransactions(structuredtransactions);
