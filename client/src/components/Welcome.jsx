@@ -47,7 +47,7 @@ const Welcome = () => {
 
   return (
     <div className="flex w-full justify-center items-center">
-      <div className="flex mf:flex-row flex-col items-start justify-between md:p-20 py-12 px-4">
+      <div className="flex mf:flex-row flex-col items-start justify-between md:p-20 py-12 px-4 ">
         <div className="flex flex-1 justify-start flex-col mf:mr-10">
           <h1 className="text-3xl sm:text-5xl text-white text-gradient py-1">
             Send Crypto <br /> across the world
@@ -82,8 +82,8 @@ const Welcome = () => {
             <div className={`rounded-br-2xl ${commonStyles}`}>Blockchain</div>
           </div>
         </div>
-        <div className="flex flex-col flex-1 items-center justify-start w-full mf:mt-0 mt-10">
-          <div className="p-3 justify-end items-start flex-col rounded-xl h-40 sm:w-72 w-full my-5 eth-card white-glassmorphism">
+        <div className="flex flex-col flex-1 items-center justify-start w-full mf:mt-0 mt-10 gap-5 ">
+          <div className="flex p-3 justify-end items-start flex-col rounded-xl h-40 sm:w-72 w-full eth-card white-glassmorphism">
             <div className="flex justify-between flex-col w-full h-full">
               <div className="flex justify-between items-start">
                 <div className="w-10 h-10 rounded-full border-2 border-white flex justify-center items-center">
@@ -96,9 +96,9 @@ const Welcome = () => {
                   {currentAccount ? (
                     shortenAddress(currentAccount)
                   ) : (
-                    <p className="text-sm text-gray-200">
+                    <span className="text-sm text-gray-200">
                       Connect wallet to see address
-                    </p>
+                    </span>
                   )}
                 </p>
                 <p className="text-white font-semibold text-lg mt-1">
@@ -108,6 +108,7 @@ const Welcome = () => {
             </div>
           </div>
           <div className="p-5 sm:w-96 w-full flex flex-col justify-start items-center blue-glassmorphism">
+            <h1 className="text-gray-400 text-md pb-2 ">Make Transaction</h1>
             <Input
               placeholder="Address To"
               name="addressTo"

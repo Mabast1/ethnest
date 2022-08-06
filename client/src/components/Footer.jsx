@@ -30,7 +30,7 @@ const Footer = () => {
       </div>
       <div className="sm:w-[90%] w-full h-[0.10px] bg-gray-600 mt-5" />
 
-      <div className="sm:w-[90%] w-full flex justify-between items-center mt-3">
+      <div className="sm:w-[90%] w-full flex justify-between items-center mt-3 pb-3">
         <p className="text-white text-left text-xs">
           {" "}
           @ Ethnest 2022 | Built With ❤ By:{" "}
